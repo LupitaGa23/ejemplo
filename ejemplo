@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Verificar si el script se está ejecutando como root
+if [[ $EUID -ne 0 ]]; then
+   echo "Este script debe ejecutarse como root" 
+   exit 1
+fi
+
+# Actualizar la lista de paquetes e instalar las actualizaciones
+echo "Actualizando la lista de paquetes..."
+apt-get update -y
+
+echo "Instalando actualizaciones..."
+apt-get upgrade -y
+
+# Instalar un paquete (por ejemplo, curl)
+echo "Instalando curl..."
+apt-get install curl -y
+
+# Crear un directorio
+DIRECTORIO="/opt/mi_directorio"
+if [ ! -d "$DIRECTORIO" ]; then
+  echo "Creando el directorio $DIRECTORIO..."
+  mkdir -p $DIRECTORIO
+else
+  echo "El directorio $DIRECTORIO ya existe."
+fi
+
+# Crear y escribir en un archivo
+ARCHIVO="$DIRECTORIO/mi_archivo.txt"
+echo "Escribiendo en el archivo $ARCHIVO..."
+echo "Este es un archivo creado por un script de Bash." > $ARCHIVO
+
+echo "El script ha terminado exitosamente."
